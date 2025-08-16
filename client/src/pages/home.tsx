@@ -170,7 +170,7 @@ export default function Home() {
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">LogoCraft AI</h1>
+                <h1 className="text-xl font-bold text-gray-900">Logo Forge</h1>
                 <p className="text-xs text-gray-500">Professional Logo Design</p>
               </div>
             </div>

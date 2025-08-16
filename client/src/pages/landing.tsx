@@ -57,7 +57,7 @@ export default function Landing() {
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">LogoCraft AI</h1>
+                <h1 className="text-xl font-bold text-gray-900">Logo Forge</h1>
                 <p className="text-xs text-gray-500">Professional Logo Design</p>
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function Landing() {
               Ready to Create Your Perfect Logo?
             </h2>
             <p className="text-lg text-indigo-100 mb-8">
-              Join thousands of businesses who've already created stunning logos with LogoCraft AI
+              Join thousands of businesses who've already created stunning logos with Logo Forge
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -233,7 +233,7 @@ export default function Landing() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
-            <span className="font-bold text-gray-900">LogoCraft AI</span>
+            <span className="font-bold text-gray-900">Logo Forge</span>
           </div>
           <p className="text-gray-600">
             Professional logo design powered by artificial intelligence

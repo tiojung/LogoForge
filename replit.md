@@ -1,6 +1,6 @@
 # Overview
 
-LogoCraft AI is a modern web application that provides AI-powered logo design services. Users can create professional logos through three main approaches: describing their vision in text, uploading reference images for style analysis, or modifying existing logos. The application uses OpenAI's DALL-E for image generation and implements a credit-based pricing model where users pay only for what they export.
+Logo Forge is a modern web application that provides AI-powered logo design services. Users can create professional logos through three main approaches: describing their vision in text, uploading reference images for style analysis, or modifying existing logos. The application uses OpenAI's DALL-E for image generation and implements a credit-based pricing model where users pay only for what they export.
 
 # User Preferences
 
