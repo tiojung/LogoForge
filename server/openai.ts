@@ -27,14 +27,15 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
   try {
     console.log("Generating logo variations for:", request);
     
-    const systemPrompt = `You are an expert logo designer and brand strategist. Generate 6 diverse logo concepts based on the user's requirements. 
+    const systemPrompt = `You are an expert logo designer and brand strategist. Generate 6 diverse, professional logo concepts that will look clean and human-designed when created by AI.
 
-    Consider:
-    - Brand personality and values
-    - Target audience appropriateness
-    - Scalability and versatility
-    - Modern design trends while maintaining timelessness
-    - Industry conventions and differentiation opportunities
+    CRITICAL DESIGN PRINCIPLES for professional logos:
+    - Use SIMPLE, geometric shapes and clean lines
+    - Focus on TYPOGRAPHY-BASED designs or simple icons
+    - Avoid complex illustrations, gradients, or detailed imagery
+    - Use 1-3 solid colors maximum
+    - Design for scalability and vector conversion
+    - Create logos that work in black and white
 
     IMPORTANT: You must respond with valid JSON in exactly this format:
     {
@@ -58,7 +59,19 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     ${request.industry ? `Industry: ${request.industry}` : ''}
     ${request.colors?.length ? `Preferred Colors: ${request.colors.join(', ')}` : ''}
 
-    Generate 6 diverse logo concepts that would work well for this business.`;
+    Generate 6 diverse logo concepts that are CLEAN and PROFESSIONAL. Each prompt must create logos that look human-designed, not AI-generated.
+    
+    CRITICAL PROMPT REQUIREMENTS:
+    - Start each prompt with "Professional minimalist logo design for [business name]"
+    - Include "vector style illustration, clean geometric shapes, flat design"
+    - Add "solid colors only, no gradients, no shadows, no 3D effects"
+    - Specify "white background, high contrast"
+    - Use "corporate branding style, scalable design"
+    - Include specific hex color codes
+    - End with "simple and memorable, professional quality"
+
+    FOCUS ON: Simple wordmarks, single geometric icons, typography-based designs, monogram logos.
+    AVOID: Complex illustrations, realistic imagery, multiple elements, busy compositions, photographic elements.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -90,7 +103,7 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
         style: "modern",
         colors: ["#2563eb", "#1e40af", "#3b82f6"],
         description: "A clean, modern logo with geometric shapes and bold typography",
-        prompt: `Professional logo for ${request.businessName}, modern minimalist design, clean geometric shapes, blue color scheme, corporate branding, vector style, transparent background`
+        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, clean geometric shapes, flat design, solid blue colors only (#2563eb), no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
       },
       {
         id: "fallback-2", 
@@ -98,7 +111,7 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
         style: "classic",
         colors: ["#1f2937", "#374151", "#6b7280"],
         description: "Elegant typography-based logo with refined letterforms",
-        prompt: `Professional logo for ${request.businessName}, elegant typography design, classic serif font, dark gray colors, sophisticated branding, vector style, transparent background`
+        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, elegant typography-based design, clean serif letterforms, flat design, solid dark gray colors only (#1f2937), no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
       }
     ];
   }
@@ -106,7 +119,8 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
 
 export async function generateLogoImage(concept: LogoVariation): Promise<{ url: string }> {
   try {
-    const optimizedPrompt = `Professional logo design: ${concept.prompt}. Clean vector-style design, transparent background, high contrast, scalable, minimal, modern typography if text included. Commercial quality logo design.`;
+    // Use the concept's prompt directly since it's already optimized for professional quality
+    const optimizedPrompt = concept.prompt;
 
     const response = await openai.images.generate({
       model: "dall-e-3",
@@ -114,7 +128,7 @@ export async function generateLogoImage(concept: LogoVariation): Promise<{ url: 
       n: 1,
       size: "1024x1024",
       quality: "hd",
-      style: "natural"
+      style: "vivid" // Use vivid for better contrast and professional appearance
     });
 
     return { url: response.data?.[0]?.url || "" };
