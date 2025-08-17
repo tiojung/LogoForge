@@ -61,25 +61,30 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     ${request.industry ? `Industry: ${request.industry}` : ''}
     ${request.colors?.length ? `Preferred Colors: ${request.colors.join(', ')}` : ''}
 
-    Generate 6 diverse logo concepts that are CLEAN and PROFESSIONAL. Each prompt must create logos that look human-designed, not AI-generated.
-    
-    CRITICAL PROMPT REQUIREMENTS:
-    - Start each prompt with "Professional minimalist logo design for [business name]"
-    - Include "vector style illustration, clean geometric shapes, flat design"
-    - Add "solid colors only, no gradients, no shadows, no 3D effects"
-    - Specify "white background, high contrast"
-    - Use "corporate branding style, scalable design"
-    - Include specific hex color codes
-    - End with "simple and memorable, professional quality"
+    Generate 6 diverse logo concepts that are CLEAN, PROFESSIONAL, and MEANINGFUL to the business purpose. Each prompt must create logos that look human-designed and relate to the business.
 
-    FOCUS ON: Simple wordmarks, single geometric icons, typography-based designs, monogram logos, Nike-style minimalist symbols.
-    AVOID: Complex illustrations, realistic imagery, multiple elements, busy compositions, photographic elements.
+    CRITICAL REQUIREMENTS:
+    - Make logos RELEVANT to the specific business described (analyze the business name and description to determine appropriate symbols/elements)
+    - Use minimal geometric shapes that relate to the business purpose/industry
+    - Include typography that reflects the business personality
+    - Create concepts that work at any size
     
-    ESSENTIAL: Include 2-3 concepts that use ONLY BLACK COLOR (#000000) for Nike-style minimalism - simple, iconic symbols that work standalone without text.
+    PROMPT STRUCTURE:
+    - Start with design type (wordmark, icon, monogram, etc.)
+    - Specify the business-relevant elements to include
+    - Use "vector style, clean geometric shapes, flat design"
+    - Add "solid colors only, no gradients, no shadows"
+    - Include specific color codes
+    - End with "professional, scalable, memorable"
+
+    FOCUS ON: Business-relevant minimal icons, clean wordmarks, meaningful monograms, simple geometric symbols related to the business purpose.
+    AVOID: Generic shapes, complex illustrations, unrelated symbols.
     
-    FOR NIKE-STYLE CONCEPTS: Create prompts like "Single black geometric symbol for [business], Nike swoosh style, minimal curved line/shape, iconic standalone symbol, black (#000000) only, no text, vector illustration"
+    ESSENTIAL: Include 2-3 concepts that use ONLY BLACK COLOR (#000000) for ultra-minimalist approach - simple, iconic symbols that relate to the specific business.
     
-    FOR TYPOGRAPHY WORDMARKS: Create prompts like "Clean modern wordmark for [business], custom typography, geometric sans-serif font, perfectly spaced letters, black (#000000) text only, professional typography design"`;
+    BUSINESS ANALYSIS: First analyze the business name and description to identify relevant symbols/elements (e.g., tech company = geometric circuits/nodes, food business = simple utensils/shapes, fitness = basic geometric body forms, etc.)
+    
+    FOR TYPOGRAPHY WORDMARKS: Create prompts that specify typography style appropriate for the business type and personality.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -107,27 +112,27 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     return [
       {
         id: "fallback-1",
-        concept: "Nike-Style Minimalist Symbol",
-        style: "minimalist icon",
+        concept: "Minimalist Business Icon",
+        style: "geometric icon",
         colors: ["#000000"],
-        description: "An extremely simple, iconic black symbol that works standalone - inspired by Nike's swoosh approach",
-        prompt: `Single black geometric symbol for ${request.businessName}, Nike swoosh style, minimal curved line or simple shape, iconic standalone symbol, black (#000000) only, no text, no company name, vector illustration, clean geometric form, flat design, white background, high contrast, extremely simple like Nike swoosh`
+        description: "A simple geometric symbol that relates to the business purpose, using clean minimal shapes",
+        prompt: `Minimalist business icon for ${request.businessName}, simple geometric symbol relevant to the business purpose, black (#000000) only, vector style, clean shapes, flat design, no text, professional symbol, scalable, memorable`
       },
       {
         id: "fallback-2", 
-        concept: "Modern Black Wordmark",
-        style: "typography",
+        concept: "Modern Typography Wordmark",
+        style: "wordmark",
         colors: ["#000000"],
-        description: "Clean, modern typography using only black color for maximum impact and simplicity",
-        prompt: `Clean modern wordmark for ${request.businessName}, custom typography, geometric sans-serif font, perfectly spaced letters, black (#000000) text only, professional typography design, vector style, flat design, white background, high contrast, modern font styling, excellent kerning and spacing`
+        description: "Clean, modern typography appropriate for the business type and personality",
+        prompt: `Modern typography wordmark for ${request.businessName}, clean geometric sans-serif font, perfectly spaced letters, black (#000000) text only, professional typography design appropriate for business type, vector style, flat design, excellent kerning`
       },
       {
         id: "fallback-3",
-        concept: "Geometric Monogram",
+        concept: "Business Monogram",
         style: "monogram",
         colors: ["#000000"],
-        description: "Simple geometric monogram using initials in pure black",
-        prompt: `Geometric monogram using initials from ${request.businessName}, interlocking letters, black (#000000) only, clean geometric letterforms, modern sans-serif style, vector illustration, flat design, white background, high contrast, sophisticated typography, overlapping or connected letters`
+        description: "Monogram using business initials with clean, professional styling",
+        prompt: `Professional monogram using initials from ${request.businessName}, clean geometric letterforms, black (#000000) only, modern sans-serif style, vector illustration, sophisticated typography, overlapping or interlocked letters`
       }
     ];
   }
