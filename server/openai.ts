@@ -33,9 +33,11 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     - Use SIMPLE, geometric shapes and clean lines
     - Focus on TYPOGRAPHY-BASED designs or simple icons
     - Avoid complex illustrations, gradients, or detailed imagery
-    - Use 1-3 solid colors maximum
+    - Use 1-3 solid colors maximum (include pure black monochrome options)
     - Design for scalability and vector conversion
     - Create logos that work in black and white
+    - Include Nike-style minimalist concepts using only black color
+    - Create iconic symbols that are instantly recognizable
 
     IMPORTANT: You must respond with valid JSON in exactly this format:
     {
@@ -70,8 +72,10 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     - Include specific hex color codes
     - End with "simple and memorable, professional quality"
 
-    FOCUS ON: Simple wordmarks, single geometric icons, typography-based designs, monogram logos.
-    AVOID: Complex illustrations, realistic imagery, multiple elements, busy compositions, photographic elements.`;
+    FOCUS ON: Simple wordmarks, single geometric icons, typography-based designs, monogram logos, Nike-style minimalist symbols.
+    AVOID: Complex illustrations, realistic imagery, multiple elements, busy compositions, photographic elements.
+    
+    ESSENTIAL: Include 2-3 concepts that use ONLY BLACK COLOR (#000000) for Nike-style minimalism - simple, iconic symbols that work standalone without text.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -99,19 +103,27 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     return [
       {
         id: "fallback-1",
-        concept: "Modern Minimalist Design",
-        style: "modern",
-        colors: ["#2563eb", "#1e40af", "#3b82f6"],
-        description: "A clean, modern logo with geometric shapes and bold typography",
-        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, clean geometric shapes, flat design, solid blue colors only (#2563eb), no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
+        concept: "Nike-Style Minimalist Symbol",
+        style: "minimalist icon",
+        colors: ["#000000"],
+        description: "An extremely simple, iconic black symbol that works standalone - inspired by Nike's swoosh approach",
+        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, single iconic black symbol only (#000000), Nike-style minimalism, clean geometric shape, flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality, works without text`
       },
       {
         id: "fallback-2", 
-        concept: "Classic Typography",
-        style: "classic",
-        colors: ["#1f2937", "#374151", "#6b7280"],
-        description: "Elegant typography-based logo with refined letterforms",
-        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, elegant typography-based design, clean serif letterforms, flat design, solid dark gray colors only (#1f2937), no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
+        concept: "Modern Black Wordmark",
+        style: "typography",
+        colors: ["#000000"],
+        description: "Clean, modern typography using only black color for maximum impact and simplicity",
+        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, clean modern typography, black text only (#000000), flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
+      },
+      {
+        id: "fallback-3",
+        concept: "Geometric Monogram",
+        style: "monogram",
+        colors: ["#000000"],
+        description: "Simple geometric monogram using initials in pure black",
+        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, geometric monogram using initials, black only (#000000), clean shapes, flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
       }
     ];
   }
