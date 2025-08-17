@@ -235,31 +235,7 @@ export default function Home() {
                   {/* Describe Tab */}
                   <TabsContent value="describe" className="space-y-6 mt-6">
                     <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Business Name
-                        </label>
-                        <Input 
-                          placeholder="e.g., TechFlow Solutions"
-                          value={businessName}
-                          onChange={(e) => setBusinessName(e.target.value)}
-                          className="h-12 border-gray-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Describe Your Vision
-                        </label>
-                        <Textarea 
-                          placeholder="A modern, minimalist logo for a tech startup. Clean lines, professional blue colors, representing innovation and trust..."
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                          className="min-h-[100px] border-gray-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 resize-none"
-                        />
-                      </div>
-
-                      {/* Style Selection */}
+                      {/* Style Selection - Now at the top */}
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-3">
                           Style Direction
@@ -289,6 +265,32 @@ export default function Home() {
                             </Button>
                           ))}
                         </div>
+                      </div>
+
+                      {/* Business Name - Now second */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Business Name
+                        </label>
+                        <Input 
+                          placeholder="e.g., TechFlow Solutions"
+                          value={businessName}
+                          onChange={(e) => setBusinessName(e.target.value)}
+                          className="h-12 border-gray-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                        />
+                      </div>
+                      
+                      {/* Description - Now third */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Describe Your Vision
+                        </label>
+                        <Textarea 
+                          placeholder="A modern, minimalist logo for a tech startup. Clean lines, professional blue colors, representing innovation and trust..."
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          className="min-h-[100px] border-gray-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 resize-none"
+                        />
                       </div>
                     </div>
                   </TabsContent>

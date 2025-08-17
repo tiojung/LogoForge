@@ -83,7 +83,7 @@ export async function generateLogoImage(concept: LogoVariation): Promise<{ url: 
       style: "natural"
     });
 
-    return { url: response.data[0].url! };
+    return { url: response.data?.[0]?.url || "" };
   } catch (error) {
     console.error("Error generating logo image:", error);
     throw new Error("Failed to generate logo image: " + (error as Error).message);

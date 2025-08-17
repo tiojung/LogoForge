@@ -23,7 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const user = await storage.getUser(userId);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -37,7 +37,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Object storage routes for file uploads
   app.get("/objects/:objectPath(*)", isAuthenticated, async (req, res) => {
-    const userId = req.user?.claims?.sub;
+    const userId = (req.user as any)?.claims?.sub;
     const objectStorageService = new ObjectStorageService();
     try {
       const objectFile = await objectStorageService.getObjectEntityFile(
@@ -75,7 +75,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Logo project routes
   app.post("/api/projects", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const projectData = insertLogoProjectSchema.parse({
         ...req.body,
         userId,
@@ -94,7 +94,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/projects", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const projects = await storage.getUserLogoProjects(userId);
       res.json(projects);
     } catch (error) {
@@ -105,7 +105,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/projects/:id", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const project = await storage.getLogoProject(req.params.id);
       
       if (!project) {
@@ -126,10 +126,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Logo generation routes
   app.post("/api/generate-logos", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const user = await storage.getUser(userId);
       
-      if (!user || user.credits < 1) {
+      if (!user || (user.credits || 0) < 1) {
         return res.status(400).json({ error: "Insufficient credits" });
       }
 
@@ -167,7 +167,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       );
 
       // Deduct credit
-      await storage.updateUserCredits(userId, user.credits - 1);
+      await storage.updateUserCredits(userId, (user.credits || 0) - 1);
       await storage.createCreditTransaction({
         userId,
         type: "usage",
@@ -200,10 +200,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/modify-logo", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const user = await storage.getUser(userId);
       
-      if (!user || user.credits < 1) {
+      if (!user || (user.credits || 0) < 1) {
         return res.status(400).json({ error: "Insufficient credits" });
       }
 
@@ -215,7 +215,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const imageResult = await generateLogoImage(modifiedLogo);
       
       // Deduct credit
-      await storage.updateUserCredits(userId, user.credits - 1);
+      await storage.updateUserCredits(userId, (user.credits || 0) - 1);
       await storage.createCreditTransaction({
         userId,
         type: "usage",
@@ -236,10 +236,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Credit and export routes
   app.post("/api/export-logo", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const user = await storage.getUser(userId);
       
-      if (!user || user.credits < 3) {
+      if (!user || (user.credits || 0) < 3) {
         return res.status(400).json({ error: "Insufficient credits (3 required)" });
       }
 
@@ -255,7 +255,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       // Deduct credits
-      await storage.updateUserCredits(userId, user.credits - 3);
+      await storage.updateUserCredits(userId, (user.credits || 0) - 3);
       await storage.createCreditTransaction({
         userId,
         type: "usage",
@@ -277,7 +277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/credits", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const user = await storage.getUser(userId);
       const transactions = await storage.getUserCreditTransactions(userId);
       
@@ -294,7 +294,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Asset upload handling
   app.put("/api/logo-assets", isAuthenticated, async (req, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any)?.claims?.sub;
       const { assetURL, projectId, type, fileName, mimeType, fileSize } = req.body;
 
       if (!assetURL || !projectId || !type) {
