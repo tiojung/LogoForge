@@ -75,7 +75,11 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
     FOCUS ON: Simple wordmarks, single geometric icons, typography-based designs, monogram logos, Nike-style minimalist symbols.
     AVOID: Complex illustrations, realistic imagery, multiple elements, busy compositions, photographic elements.
     
-    ESSENTIAL: Include 2-3 concepts that use ONLY BLACK COLOR (#000000) for Nike-style minimalism - simple, iconic symbols that work standalone without text.`;
+    ESSENTIAL: Include 2-3 concepts that use ONLY BLACK COLOR (#000000) for Nike-style minimalism - simple, iconic symbols that work standalone without text.
+    
+    FOR NIKE-STYLE CONCEPTS: Create prompts like "Single black geometric symbol for [business], Nike swoosh style, minimal curved line/shape, iconic standalone symbol, black (#000000) only, no text, vector illustration"
+    
+    FOR TYPOGRAPHY WORDMARKS: Create prompts like "Clean modern wordmark for [business], custom typography, geometric sans-serif font, perfectly spaced letters, black (#000000) text only, professional typography design"`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -107,7 +111,7 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
         style: "minimalist icon",
         colors: ["#000000"],
         description: "An extremely simple, iconic black symbol that works standalone - inspired by Nike's swoosh approach",
-        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, single iconic black symbol only (#000000), Nike-style minimalism, clean geometric shape, flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality, works without text`
+        prompt: `Single black geometric symbol for ${request.businessName}, Nike swoosh style, minimal curved line or simple shape, iconic standalone symbol, black (#000000) only, no text, no company name, vector illustration, clean geometric form, flat design, white background, high contrast, extremely simple like Nike swoosh`
       },
       {
         id: "fallback-2", 
@@ -115,7 +119,7 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
         style: "typography",
         colors: ["#000000"],
         description: "Clean, modern typography using only black color for maximum impact and simplicity",
-        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, clean modern typography, black text only (#000000), flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
+        prompt: `Clean modern wordmark for ${request.businessName}, custom typography, geometric sans-serif font, perfectly spaced letters, black (#000000) text only, professional typography design, vector style, flat design, white background, high contrast, modern font styling, excellent kerning and spacing`
       },
       {
         id: "fallback-3",
@@ -123,7 +127,7 @@ export async function generateLogoVariations(request: LogoGenerationRequest): Pr
         style: "monogram",
         colors: ["#000000"],
         description: "Simple geometric monogram using initials in pure black",
-        prompt: `Professional minimalist logo design for ${request.businessName}, vector style illustration, geometric monogram using initials, black only (#000000), clean shapes, flat design, no gradients, no shadows, no 3D effects, white background, high contrast, corporate branding style, scalable design, simple and memorable, professional quality`
+        prompt: `Geometric monogram using initials from ${request.businessName}, interlocking letters, black (#000000) only, clean geometric letterforms, modern sans-serif style, vector illustration, flat design, white background, high contrast, sophisticated typography, overlapping or connected letters`
       }
     ];
   }
